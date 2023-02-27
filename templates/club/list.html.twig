@@ -1,0 +1,40 @@
+<table>
+{% for f in tabFormations%}
+{%if 'theorique' in f.Description%}
+<tr>
+<td> {{f.ref}}</td>
+<td>{{f.Titre|upper}}</td>
+<td>{{f.Description}}</td>
+<td>{{f.date_debut}}</td>
+
+{%if f.nb_participants == 0%}
+<td><a href="{{path('/detail',{'titre':f.Titre})}}> Participer </button></td>
+{%endif%}
+</tr>
+{%endif%}.
+
+{%endfor%}
+</table>
+le nombre des formations : {{tabFormations|length}}
+{% set max=0 %}
+{% for f in tabFormations%}
+{% set max = max(f.nb_participants,max)%}
+{% endfor%}
+{{max}}
+
+{% for f in tabFormations%}
+{%if f.nb_participants== max%}
+<p> {{f.Titre}}</p>
+{%endif%}
+{%endfor%}
+
+{%set nb=0%}
+{%for f in tabFormations%}
+{% set nb=nb+f.nb_participants%}
+{%endfor%}
+
+le nombre total des part est ={{nb}}
+
+{%if tabFormations is empty or tabFormations is defined%}
+le tab est vide
+{%endif%}
